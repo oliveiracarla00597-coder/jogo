@@ -1,0 +1,112 @@
+STHEFANY SERAFIM 
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vigia da Meia-Noite - Jogo de Terror</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+    }
+    #game {
+      width: 100vw;
+      height: 100vh;
+      background-image: url('https://i.imgur.com/ZD8J1Zy.jpeg'); /* imagem de fundo escura */
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+    #text-box {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border: 1px solid white;
+      font-size: 18px;
+    }
+    #choices {
+      margin-top: 10px;
+    }
+    button {
+      background: black;
+      color: white;
+      border: 1px solid white;
+      padding: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    #jumpscare {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: black;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    #jumpscare img {
+      width: 100%;
+      height: auto;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <div id="text-box">
+      <p id="story">Você acorda na sala de segurança. Algo está errado. Os animatrônicos... eles estão se movendo sozinhos.</p>
+      <div id="choices">
+        <button onclick="escolha(1)">Ver câmeras</button>
+        <button onclick="escolha(2)">Trancar porta</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="jumpscare">
+    <img src="https://i.imgur.com/dZ0Lw2N.png" alt="SUSTO!" />
+  </div>
+
+  <audio id="susto-som" src="https://www.soundjay.com/human/screams/scream-01.mp3"></audio>
+
+  <script>
+    let sustoAtivado = false;
+
+    function escolha(opcao) {
+      const story = document.getElementById('story');
+      if (opcao === 1) {
+        story.innerText = "Na câmera 3, algo se move. Um dos animatrônicos não está mais no lugar...";
+        verificarSusto();
+      } else if (opcao === 2) {
+        story.innerText = "Você tranca a porta. Mas será que era a certa?";
+        verificarSusto();
+      }
+    }
+
+    function verificarSusto() {
+      if (!sustoAtivado && Math.random() < 0.4) {
+        ativarSusto();
+      }
+    }
+
+    function ativarSusto() {
+      sustoAtivado = true;
+      const jumpscare = document.getElementById('jumpscare');
+      const audio = document.getElementById('susto-som');
+      jumpscare.style.display = 'flex';
+      audio.play();
+
+      setTimeout(() => {
+        alert("Você foi pego! Fim de jogo.");
+        location.reload();
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
